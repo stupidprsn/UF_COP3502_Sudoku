@@ -3,23 +3,31 @@ import pygame
 from textmanager import TextManager
 import config
 from button import Button
+
+
 class ResultScene(Scene):
-    def __init__(self, screen: pygame.Surface, textManager: TextManager, win: bool) -> None:
+    def __init__(self, screen: pygame.Surface, win: bool) -> None:
         self._screen: pygame.Surface = screen
         self._background: pygame.Surface = pygame.image.load(config.BACKGROUND_IMAGE)
         self._doRestart: bool = False
         self._backgroundRect: pygame.Rect = self._background.get_rect(
-            topleft=(0,0)
+            topleft=(0, 0)
         )
         self._nextScene: Scene = None
-        self._textManger: TextManager = textManager
+        self._textManger: TextManager = TextManager.getInstance()
         self._doExit: bool = False
         if win:
-            self._text: tuple[pygame.Surface, pygame.Rect] = textManager.getText("Game Won!", config.TITLE_SIZE, config.WELCOME_POS[0], config.WELCOME_POS[1])
-            self._button: Button(textManager, screen, "EXIT", (config.WINDOW_WIDTH // 2) - config.HOME_BUTTON_OFFSET, config.HOME_BUTTON_Y, self.exitButton)
+            self._text: tuple[pygame.Surface, pygame.Rect] = self._textManger.getText("Game Won!", config.TITLE_SIZE,
+                                                                                      config.WELCOME_POS[0],
+                                                                                      config.WELCOME_POS[1])
+            self._button: Button = Button(screen, "EXIT", (config.WINDOW_WIDTH // 2), config.HOME_BUTTON_Y,
+                                          self.exitButton)
         else:
-            self._text: tuple[pygame.Surface, pygame.Rect] = textManager.getText("Game Over :(", config.TITLE_SIZE, config.WELCOME_POS[0], config.WELCOME_POS[1])
-            self._button: Button(textManager, screen, "RESTART", (config.WINDOW_WIDTH // 2) - config.HOME_BUTTON_OFFSET, config.HOME_BUTTON_Y, self.restartButton)
+            self._text: tuple[pygame.Surface, pygame.Rect] = self._textManger.getText("Game Over :(", config.TITLE_SIZE,
+                                                                                      config.WELCOME_POS[0],
+                                                                                      config.WELCOME_POS[1])
+            self._button: Button = Button(screen, "RESTART", (config.WINDOW_WIDTH // 2), config.HOME_BUTTON_Y,
+                                          self.restartButton)
 
     def update(self, events: list[pygame.event.Event]) -> None:
         self._screen.blit(self._background, self._backgroundRect)

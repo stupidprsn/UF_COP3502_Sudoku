@@ -8,24 +8,24 @@ from Scenes.scene import Scene
 from difficulty import Difficulty
 
 class MenuScene(Scene):
-    def __init__(self, screen: pygame.Surface, textManager: TextManager) -> None:
+    def __init__(self, screen: pygame.Surface) -> None:
         self._nextScene: Optional[Scene] = None
         self._screen: pygame.Surface = screen
         self._background: pygame.Surface = pygame.image.load(config.BACKGROUND_IMAGE)
         self._backgroundRect: pygame.Rect = self._background.get_rect(
             topleft=(0,0)
         )
-        self._textManager: TextManager = textManager
+        self._textManager: TextManager = TextManager.getInstance()
         self._texts: list[tuple[pygame.Surface, pygame.Rect]] = [
-            textManager.getText(config.WELCOME_MSG, config.TITLE_SIZE, config.WELCOME_POS[0], config.WELCOME_POS[1]),
-            textManager.getText(config.SELECT_GAME_MSG, config.SUBTITLE_SIZE, config.SELECT_GAME_POS[0],
+            self._textManager.getText(config.WELCOME_MSG, config.TITLE_SIZE, config.WELCOME_POS[0], config.WELCOME_POS[1]),
+            self._textManager.getText(config.SELECT_GAME_MSG, config.SUBTITLE_SIZE, config.SELECT_GAME_POS[0],
                                 config.SELECT_GAME_POS[1])
         ]
         self._buttons: list[Button] = [
-            Button(textManager, screen, "EASY", (config.WINDOW_WIDTH // 2) - config.HOME_BUTTON_OFFSET,
+            Button(screen, "EASY", (config.WINDOW_WIDTH // 2) - config.HOME_BUTTON_OFFSET,
                    config.HOME_BUTTON_Y, self.easyButton),
-            Button(textManager, screen, "MEDIUM", (config.WINDOW_WIDTH // 2), config.HOME_BUTTON_Y, self.mediumButton),
-            Button(textManager, screen, "HARD", (config.WINDOW_WIDTH // 2) + config.HOME_BUTTON_OFFSET,
+            Button(screen, "MEDIUM", (config.WINDOW_WIDTH // 2), config.HOME_BUTTON_Y, self.mediumButton),
+            Button(screen, "HARD", (config.WINDOW_WIDTH // 2) + config.HOME_BUTTON_OFFSET,
                    config.HOME_BUTTON_Y, self.hardButton)
         ]
 
@@ -52,10 +52,10 @@ class MenuScene(Scene):
         return False
 
     def easyButton(self) -> None:
-        self._nextScene = GameScene(self._screen, self._textManager, Difficulty.easy)
+        self._nextScene = GameScene(self._screen, Difficulty.easy)
 
     def mediumButton(self) -> None:
-        self._nextScene = GameScene(self._screen, self._textManager, Difficulty.medium)
+        self._nextScene = GameScene(self._screen, Difficulty.medium)
 
     def hardButton(self) -> None:
-        self._nextScene = GameScene(self._screen, self._textManager, Difficulty.hard)
+        self._nextScene = GameScene(self._screen, Difficulty.hard)

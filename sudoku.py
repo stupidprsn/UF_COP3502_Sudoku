@@ -1,7 +1,7 @@
 import pygame
+import config
 from Scenes.scene import Scene
 from textmanager import TextManager
-import config
 from Scenes.menuScene import MenuScene
 
 
@@ -9,13 +9,15 @@ def main() -> None:
     pygame.init()
     pygame.display.set_caption(config.TITLE)
     pygame.display.set_icon(pygame.image.load(config.ICON))
-    screen: pygame.Surface = pygame.display.set_mode((config.WINDOW_WIDTH, config.WINDOW_WIDTH))
+    screen: pygame.Surface = pygame.display.set_mode((config.WINDOW_WIDTH, config.WINDOW_HEIGHT))
 
     clock: pygame.time.Clock = pygame.time.Clock()
     run: bool = True
 
     textManager: TextManager = TextManager(screen)
-    scene: Scene = MenuScene(screen, textManager)
+    scene: Scene = MenuScene(screen)
+
+    events: list[pygame.event.Event] = []
 
     while run:
         events = pygame.event.get()
@@ -29,7 +31,7 @@ def main() -> None:
         if scene.doExit:
             run = False
         if scene.doRestart:
-            scene = MenuScene(screen, textManager)
+            scene = MenuScene(screen)
 
         pygame.display.flip()
         clock.tick(config.FPS_CAP)

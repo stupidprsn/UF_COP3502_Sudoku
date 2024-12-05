@@ -1,7 +1,8 @@
 from enum import Enum
 
 
+# Int value are number of cells to be removed
 class Difficulty(Enum):
-    easy = 0
-    medium = 1
-    hard = 2
+    easy = 30
+    medium = 40
+    hard = 50

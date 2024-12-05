@@ -9,10 +9,10 @@ Creates a button
 '''
 class Button:
     def __init__(self,
-                 textManager: TextManager, screen: pygame.Surface, text: pygame.Surface, x: int, y: int,
+                 screen: pygame.Surface, text: pygame.Surface, x: int, y: int,
                  callback: Callable[[], None]) -> None:
         self._screen: pygame.Surface = screen
-        self._text: tuple[pygame.Surface, pygame.Rect] = textManager.getText(text, config.BUTTON_TEXT, x, y)
+        self._text: tuple[pygame.Surface, pygame.Rect] = TextManager.getInstance().getText(text, config.BUTTON_TEXT, x, y)
         self._rect: pygame.Rect = pygame.Rect(0, 0, config.BUTTON_WIDTH, config.BUTTON_HEIGHT)
         self._rect.center = (x, y)
         self._callback = callback
