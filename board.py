@@ -80,10 +80,12 @@ class Board:
     def check_board(self) -> bool:
         self.update_board()
         checker: sudoku_generator.SudokuGenerator = sudoku_generator.SudokuGenerator(9, 9)
-        checker.board = self.userValues
+        checker.board = deepcopy(self.userValues)
         for i in range(9):
             for j in range(9):
+                checker.board[i][j] = 0
                 if not checker.is_valid(i, j, self.userValues[i][j]):
                     return False
+                checker.board[i][j] = self.userValues[i][j]
 
         return True

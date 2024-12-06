@@ -14,13 +14,11 @@ def main() -> None:
     clock: pygame.time.Clock = pygame.time.Clock()
     run: bool = True
 
-    textManager: TextManager = TextManager(screen)
+    TextManager(screen)
     scene: Scene = MenuScene(screen)
 
-    events: list[pygame.event.Event] = []
-
     while run:
-        events = pygame.event.get()
+        events: list[pygame.event.Event] = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT or (event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE):
                 run = False

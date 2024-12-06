@@ -51,14 +51,14 @@ class GameScene(Scene):
                         else:
                             self._nextScene = ResultScene(self._screen, False)
                 elif (event.key == pygame.K_w or event.key == pygame.K_UP) and self._row != -1 and self._col != -1:
-                    self._row += 1
-                    if self._row > 8:
-                        self._row = 0
-                    self._board.select(self._row, self._col)
-                elif (event.key == pygame.K_s or event.key == pygame.K_DOWN) and self._row != -1 and self._col != -1:
                     self._row -= 1
                     if self._row < 0:
                         self._row = 8
+                    self._board.select(self._row, self._col)
+                elif (event.key == pygame.K_s or event.key == pygame.K_DOWN) and self._row != -1 and self._col != -1:
+                    self._row += 1
+                    if self._row > 8:
+                        self._row = 0
                     self._board.select(self._row, self._col)
                 elif (event.key == pygame.K_a or event.key == pygame.K_LEFT) and self._col != -1 and self._col != -1:
                     self._col -= 1
